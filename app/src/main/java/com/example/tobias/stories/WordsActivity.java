@@ -79,4 +79,20 @@ public class WordsActivity extends AppCompatActivity {
         }
         return madlibFile;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle state){
+        state.putSerializable("story", story);
+        super.onSaveInstanceState(state);
+    }
+
+    public void onRestoreInstanceState(Bundle state){
+        super.onRestoreInstanceState(state);
+        story = (Story) state.getSerializable("story");
+        EditText inputWord = (EditText) findViewById(R.id.inputWord);
+        inputWord.setHint(story.getNextPlaceholder());
+        
+        TextView remaining = (TextView) findViewById(R.id.wordsView);
+        remaining.setText(Integer.toString(story.getPlaceholderRemainingCount())+" word(s) left");
+    }
 }
